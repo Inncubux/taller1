@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.src.Interfaces
 {
-    public class IProductRepository
+    public interface IProductRepository
     {
 
     }
