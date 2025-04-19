@@ -1,5 +1,7 @@
 using ECommerce.src.Models;
+
 using Microsoft.EntityFrameworkCore;
+
 using taller1.src.Models;
 using taller1.src.Models.Relationship;
 
@@ -15,6 +17,6 @@ namespace ECommerce.src.Data
         public DbSet<CartProduct> CartProducts { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
-        
+
     }
 }

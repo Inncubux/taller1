@@ -1,5 +1,9 @@
 using ECommerce.src.Data;
+using ECommerce.src.Interfaces;
+using ECommerce.src.Repositories;
+
 using Microsoft.EntityFrameworkCore;
+
 using Serilog;
 
 
@@ -23,6 +27,8 @@ try
             .Enrich.WithThreadId()
             .Enrich.WithMachineName();
     });
+    builder.Services.AddScoped<IProductRepository, ProductRepository>();
+    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
     var app = builder.Build();
 

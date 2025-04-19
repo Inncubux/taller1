@@ -1,5 +1,7 @@
 using Bogus;
+
 using ECommerce.src.Models;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.src.Data

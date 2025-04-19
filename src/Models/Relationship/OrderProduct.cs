@@ -6,7 +6,7 @@ namespace taller1.src.Models.Relationship
     // Relaciona cada pedido con sus productos, registrando la cantidad y precio unitario.
     public class OrderProduct
     {
-        
+
         // Clave primaria surrogate
         public int Id { get; set; }
 

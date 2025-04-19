@@ -6,7 +6,7 @@ namespace taller1.src.Models.Relationship
     {
         // Clave primaria surrogate
         public int Id { get; set; }
-        
+
         // ID del carrito (FK)
         public int CartId { get; set; }
 
