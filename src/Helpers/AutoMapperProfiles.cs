@@ -21,7 +21,7 @@ namespace ECommerce.src.Helpers
         /// Initializes the mapping configuration for AutoMapper.
         /// </summary>
         public AutoMapperProfiles()
-        {   
+        {
             // Create a mapping configuration for Product to GetProductDto
             CreateMap<Product, GetProductDto>()
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))

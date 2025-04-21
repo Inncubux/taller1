@@ -4,10 +4,10 @@ using taller1.src.Models.Relationship;
 
 namespace taller1.src.Models
 {
-   /// <summary>
-   /// Entity representing a shopping cart.
-   /// This class is used to store the products that a user intends to purchase.
-   /// </summary>
+    /// <summary>
+    /// Entity representing a shopping cart.
+    /// This class is used to store the products that a user intends to purchase.
+    /// </summary>
     public class Cart
     {
         // Primary key

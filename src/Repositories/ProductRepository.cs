@@ -24,7 +24,7 @@ namespace ECommerce.src.Repositories
         private readonly StoreContext _storeContext = storeContext;
         // IMapper is an interface for mapping between domain models and DTOs.
         private readonly IMapper _mapper = mapper;
-        
+
 
         /// <summary>
         /// Method to retrieve a list of products from the database.
