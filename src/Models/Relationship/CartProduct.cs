@@ -2,24 +2,27 @@ using ECommerce.src.Models;
 
 namespace taller1.src.Models.Relationship
 {
+    /// <summary>
+    /// Entity representing the relationship between a cart and a product.
+    /// </summary>
     public class CartProduct
     {
-        // Clave primaria surrogate
+        // primary key
         public int Id { get; set; }
 
-        // ID del carrito (FK)
+        // Cart ID (FK)
         public int CartId { get; set; }
 
-        // Propiedad de navegación hacia el carrito
+        // Property for navigation to the cart
         public Cart Cart { get; set; } = null!;
 
-        // ID del producto (FK)
+        // Product ID (FK)
         public int ProductId { get; set; }
 
-        // Propiedad de navegación hacia el producto
+        // Property for navigation to the product
         public Product Product { get; set; } = null!;
 
-        // Cantidad del producto en el carrito
+        // Quantity of the product in the cart
         public int Quantity { get; set; }
     }
 }

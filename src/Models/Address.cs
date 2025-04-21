@@ -4,40 +4,41 @@ using ECommerce.src.Models;
 
 namespace taller1.src.Models
 {
-    // 2. Dirección
-    // Almacena la información de las direcciones de envío de los usuarios.
+    /// <summary>
+    /// Entity representing a user's address.
+    /// </summary>
     public class Address
     {
-        // ID de la dirección (PK)
+        // Primary key
         public int Id { get; set; }
 
-        // ID del usuario (FK)
+        // User ID (FK)
         public int UserId { get; set; }
 
-        // Propiedad de navegación hacia el usuario
+        // Property for navigation to the user
         public User User { get; set; } = null!;
 
-        // Calle
+        // Street
         [Required]
         public required string Street { get; set; }
 
-        // Número
+        // Number
         [Required]
         public required string Number { get; set; }
 
-        // Comuna
+        // City
         [Required]
         public required string Commune { get; set; }
 
-        // Región
+        // Region
         [Required]
         public required string Region { get; set; }
 
-        // Código postal
+        // Postal code
         [Required]
         public required string PostalCode { get; set; }
 
-        // ¿Es la dirección predeterminada? (bool)
+        // Indicates if this address is the default address for the user
         public bool IsDefault { get; set; } = false;
     }
 }

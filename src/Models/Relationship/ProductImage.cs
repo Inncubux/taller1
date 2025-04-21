@@ -4,20 +4,22 @@ using ECommerce.src.Models;
 
 namespace taller1.src.Models.Relationship
 {
-    // 4. Imagen_Producto
-    // Almacena las URLs de las imágenes asociadas con un producto.
+    /// <summary>
+    /// Entity representing the relationship between a product and its images.
+    /// This class is used to store the images associated with a product.
+    /// </summary>
     public class ProductImage
     {
-        // ID de la imagen (PK)
+        // Primary key
         public int Id { get; set; }
 
-        // ID del producto (FK)
+        // Product ID (FK)
         public int ProductId { get; set; }
 
-        // Propiedad de navegación hacia el producto
+        // Property for navigation to the product
         public Product Product { get; set; } = null!;
 
-        // URL de la imagen (requerida)
+        // Image URL of the product
         [Required]
         public required string ImageUrl { get; set; }
     }

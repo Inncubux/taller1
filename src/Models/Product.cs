@@ -4,51 +4,50 @@ using taller1.src.Models.Relationship;
 
 namespace ECommerce.src.Models
 {
-    // 3. Producto
-    // Representa los productos disponibles en la plataforma.
+    /// <summary>
+    /// Entity representing a product in the e-commerce system.
+    /// </summary>
     public class Product
     {
-        // ID del producto (PK)
+        // Primary key
         public int Id { get; set; }
 
-        // Título del producto
+        // Product name
         [Required]
         public required string Title { get; set; }
 
-        // Descripción del producto
+        // Product description
         public string? Description { get; set; }
 
-        // Precio del producto
+        // Price of the product
         public decimal Price { get; set; }
 
-        // Stock disponible
+        // Product stock
         public int Stock { get; set; }
 
-        // Categoría del producto
+        // Product SKU (Stock Keeping Unit)
         public string? Category { get; set; }
 
-        // Marca del producto
+        // Product brand
         public string? Brand { get; set; }
 
-        // Condición del producto ("nuevo" o "usado")
+        // Product condition (new, used, refurbished, etc.)
         [Required]
         public required string Condition { get; set; }
 
-        // Fecha de creación del producto
+        // Creation date of the product
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        // Fecha de modificación del producto
+        // Modification date of the product
         public DateTime? ModificationDate { get; set; }
 
-        // Lista de imágenes asociadas al producto.
+        // (Optional) List of images associated with the product.
         public List<ProductImage> Images { get; set; } = new();
 
-        // (Opcional) Lista de relaciones con carritos.
-        // Si decides que un producto "sepa" dónde aparece en los carritos, puedes usar esta lista.
+        // (Optional) List of reviews associated with the product.
         public List<CartProduct> CartProducts { get; set; } = new();
 
-        // (Opcional) Lista de relaciones con pedidos.
-        // Esto puede ser útil para análisis o auditorías.
+        // (Optional) List of orders associated with the product.
         public List<OrderProduct> OrderProducts { get; set; } = new();
     }
 }

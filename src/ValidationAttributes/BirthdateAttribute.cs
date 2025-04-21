@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace ECommerce.src.ValidationAttributes
 {
+    /// <summary>
+    /// Custom validation attribute to validate a birthdate.
+    /// This attribute checks if the provided birthdate is less than or equal to the current date.
+    /// </summary>
     public class BirthdateAttribute : ValidationAttribute
     {
         private readonly string _errorMessage =

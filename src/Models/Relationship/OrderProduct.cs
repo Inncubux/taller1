@@ -2,26 +2,27 @@ using ECommerce.src.Models;
 
 namespace taller1.src.Models.Relationship
 {
-    // 8. Pedido_Producto
-    // Relaciona cada pedido con sus productos, registrando la cantidad y precio unitario.
+    /// <summary>
+    /// Entity representing the relationship between a cart and a product.
+    /// </summary>
     public class OrderProduct
     {
 
-        // Clave primaria surrogate
+        // Primary key
         public int Id { get; set; }
 
-        // ID del pedido (FK)
+        // Order ID (FK)
         public int OrderId { get; set; }
         public Order Order { get; set; } = null!;
 
-        // ID del producto (FK)
+        // Product ID (FK)
         public int ProductId { get; set; }
         public Product Product { get; set; } = null!;
 
-        // Cantidad del producto en el pedido
+        // Quantity of the product in the order
         public int Quantity { get; set; }
 
-        // Precio unitario del producto en el momento de la compra
+        // Unit price of the product at the time of order
         public decimal UnitPrice { get; set; }
     }
 }

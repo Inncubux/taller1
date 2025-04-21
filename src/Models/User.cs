@@ -4,53 +4,54 @@ using taller1.src.Models;
 
 namespace ECommerce.src.Models
 {
-    // 1. Usuario
-    // Representa a los usuarios registrados (Cliente o Administrador).
+    /// <summary>
+    /// Entity representing a user in the system.
+    /// </summary>
     public class User
     {
-        // ID del usuario (PK)
+        // Primary key
         public int Id { get; set; }
 
-        // Nombre completo (requerido)
+        // Full name of the user (required)
         [Required]
         public required string FullName { get; set; }
 
-        // Correo electrónico (único y requerido)
+        // Email address (required and must be unique)
         [Required, EmailAddress]
         public required string Email { get; set; }
 
-        // Teléfono
+        // Phone number (optional)
         public string? Phone { get; set; }
 
-        // Fecha de nacimiento (requerida)
+        // Birth date (required)
         [Required]
         public DateTime BirthDate { get; set; }
 
-        // Contraseña segura (requerida)
+        // Password (required)
         [Required]
         public required string Password { get; set; }
 
-        // Rol: "cliente" o "administrador" (requerido)
+        // Rol: 1: admin, 2: user, 3: guest (required)
         [Required]
         public required int Role { get; set; }
 
-        // Estado de la cuenta: "activo" o "inactivo"
+        // Status: 0: inactive, 1: active (required)
         public int Status { get; set; } = 0;
 
-        // Fecha de registro (por defecto la fecha actual)
+        // Creation date of the user (default is the current date)
         public DateTime RegistrationDate { get; set; } = DateTime.Now;
 
-        // Último acceso (nullable si nunca ha iniciado sesión)
+        // Last login date (optional)
         public DateTime? LastLogin { get; set; }
 
-        // Relaciones:
-        // Lista de direcciones asociadas al usuario.
+        // Relationship :
+        // Address: 1 user can have many addresses.
         public List<Address> Addresses { get; set; } = new();
 
-        // Carrito de compras del usuario.
+        // Cart: 1 user can have 1 cart.
         public Cart Cart { get; set; } = new();
 
-        // Historial de pedidos del usuario.
+        // Order: 1 user can have many orders.
         public List<Order> Orders { get; set; } = new();
     }
 }

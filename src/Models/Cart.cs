@@ -4,21 +4,22 @@ using taller1.src.Models.Relationship;
 
 namespace taller1.src.Models
 {
-    // 5. Carrito
-    // Representa el contenedor de productos que un usuario desea comprar.
-    // Aquí se almacenan los productos y la cantidad deseada.
+   /// <summary>
+   /// Entity representing a shopping cart.
+   /// This class is used to store the products that a user intends to purchase.
+   /// </summary>
     public class Cart
     {
-        // ID del carrito (PK)
+        // Primary key
         public int Id { get; set; }
 
-        // ID del usuario (FK)
+        // User ID (FK)
         public int UserId { get; set; }
 
-        // Propiedad de navegación hacia el usuario dueño del carrito
+        // Property for navigation to the user
         public User User { get; set; } = null!;
 
-        // Lista de productos en el carrito con su cantidad.
+        // List of products in the cart
         public List<CartProduct> Products { get; set; } = new();
     }
 }

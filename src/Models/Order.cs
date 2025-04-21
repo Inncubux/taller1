@@ -4,31 +4,33 @@ using taller1.src.Models.Relationship;
 
 namespace taller1.src.Models
 {
-    // 7. Pedido
-    // Registra los pedidos realizados por los clientes, incluyendo información de pago y envío.
+    /// <summary>
+    /// Entity representing an order.
+    /// This class is used to store the details of a user's order.
+    /// </summary>
     public class Order
     {
-        // ID del pedido (PK)
+        // Primary key
         public int Id { get; set; }
 
-        // ID del usuario (FK)
+        // User ID (FK) who made the order
         public int UserId { get; set; }
         public User User { get; set; } = null!;
 
-        // ID de la dirección (FK) usada para el envío
+        // Address ID (FK) for delivery
         public int AddressId { get; set; }
         public Address Address { get; set; } = null!;
 
-        // Fecha de compra
+        // Date and time of the order
         public DateTime PurchaseDate { get; set; } = DateTime.Now;
 
-        // Precio total del pedido
+        // Total amount of the order
         public decimal Total { get; set; }
 
-        // Estado del pedido (pendiente, enviado, entregado, cancelado)
+        // Status of the order (e.g., pending, shipped, delivered)
         public string OrderStatus { get; set; } = "pending";
 
-        // Lista de productos incluidos en el pedido con su cantidad y precio.
+        // List of products in the order
         public List<OrderProduct> OrderProducts { get; set; } = new();
     }
 }

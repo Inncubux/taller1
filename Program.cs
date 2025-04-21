@@ -6,7 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 using Serilog;
 
-
+/// <summary>
+/// Main entry point for the application. It sets up the server, configures services, and starts the application.
+/// </summary>
+/// <returns>Sets up the server</returns>
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
@@ -33,7 +36,7 @@ try
     var app = builder.Build();
 
     // Inicializar la base de datos
-    DbInitializer.InitDb(app);
+    Seeder.InitDb(app);
 
     // Registrar información importante sobre el servidor
     app.Lifetime.ApplicationStarted.Register(() =>
