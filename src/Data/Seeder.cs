@@ -46,7 +46,8 @@ namespace ECommerce.src.Data
 
             // Generate 10 fake users using the Bogus library.
             var users = new Faker<User>()
-                .RuleFor(u => u.FullName, f => f.Name.FullName())
+                .RuleFor(u => u.FirstName, f => f.Name.FullName())
+                .RuleFor(u => u.LastName, f => f.Name.LastName())
                 .RuleFor(u => u.Email, f => f.Internet.Email())
                 .RuleFor(u => u.Phone, f => f.Phone.PhoneNumber())
                 .RuleFor(u => u.BirthDate, f => f.Date.Past(30, DateTime.Now.AddYears(-18)))

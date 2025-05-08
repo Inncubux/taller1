@@ -9,7 +9,7 @@ namespace ECommerce.src.Models
     /// <summary>
     /// Entity representing a user in the system.
     /// </summary>
-    public class User: IdentityUser
+    public class User : IdentityUser
     {
         // First name (required)
         public required string FirstName { get; set; }
