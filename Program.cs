@@ -1,8 +1,14 @@
+using System.Security.Claims;
+
 using ECommerce.src.Data;
 using ECommerce.src.Interfaces;
+using ECommerce.src.Models;
 using ECommerce.src.Repositories;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 using Serilog;
 
@@ -32,8 +38,39 @@ try
     });
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    builder.Services.AddIdentity<User, IdentityRole>(opt =>
+    {
+        opt.User.RequireUniqueEmail = true;
+        opt.Password.RequireNonAlphanumeric = false;
+        opt.Password.RequiredLength = 6;
+        opt.SignIn.RequireConfirmedEmail = false;
+    })
+        .AddEntityFrameworkStores<StoreContext>();
+
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(opt =>
+    {
+        opt.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["JWT:Issuer"],
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["JWT:Audience"],
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
+            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]!)),
+            RoleClaimType = ClaimTypes.Role
+        };
+    });
 
     var app = builder.Build();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    
 
     // Inicializar la base de datos
     Seeder.InitDb(app);
