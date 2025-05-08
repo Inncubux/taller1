@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+using Microsoft.AspNetCore.Identity;
+
 using taller1.src.Models;
 
 namespace ECommerce.src.Models
@@ -7,39 +9,30 @@ namespace ECommerce.src.Models
     /// <summary>
     /// Entity representing a user in the system.
     /// </summary>
-    public class User
+    public class User: IdentityUser
     {
-        // Primary key
-        public int Id { get; set; }
+        // First name (required)
+        public required string FirstName { get; set; }
+        // Last name (required)
 
-        // Full name of the user (required)
-        [Required]
-        public required string FullName { get; set; }
-
-        // Email address (required and must be unique)
-        [Required, EmailAddress]
-        public required string Email { get; set; }
-
-        // Phone number (optional)
-        public string? Phone { get; set; }
+        public required string LastName { get; set; }
+        //Phone number (required)
+        public required string Phone { get; set; }
 
         // Birth date (required)
-        [Required]
-        public DateTime BirthDate { get; set; }
+        public required DateTime BirthDate { get; set; }
 
         // Password (required)
-        [Required]
         public required string Password { get; set; }
 
-        // Rol: 1: admin, 2: user, 3: guest (required)
-        [Required]
+        // Rol: 1: admin, 2: user (required)
         public required int Role { get; set; }
 
         // Status: 0: inactive, 1: active (required)
-        public int Status { get; set; } = 0;
+        public bool Status { get; set; } = true;
 
-        // Creation date of the user (default is the current date)
-        public DateTime RegistrationDate { get; set; } = DateTime.Now;
+        // Creation date of the user (default is the current date) required
+        public required DateTime RegistrationDate { get; set; } = DateTime.Now;
 
         // Last login date (optional)
         public DateTime? LastLogin { get; set; }
@@ -47,6 +40,8 @@ namespace ECommerce.src.Models
         // Relationship :
         // Address: 1 user can have many addresses.
         public List<Address> Addresses { get; set; } = new();
+
+        public string? DeactivationReason { get; set; }
 
         // Cart: 1 user can have 1 cart.
         public Cart Cart { get; set; } = new();
