@@ -25,7 +25,8 @@ namespace ECommerce.src.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
         }
 
-        public String GenerateToken(User user, string role){
+        public String GenerateToken(User user, string role)
+        {
             var claims = new List<Claim>{
                 new(JwtRegisteredClaimNames.Email, user.Email!),
                 new(JwtRegisteredClaimNames.GivenName, user.FirstName),
@@ -34,7 +35,8 @@ namespace ECommerce.src.Services
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenDescriptor = new SecurityTokenDescriptor{
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = creds,

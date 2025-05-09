@@ -2,8 +2,10 @@ using System.Security.Claims;
 
 using ECommerce.src.Data;
 using ECommerce.src.Interfaces;
+using ECommerce.src.Middleware;
 using ECommerce.src.Models;
 using ECommerce.src.Repositories;
+using ECommerce.src.Services;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +28,7 @@ try
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddControllers();
+    builder.Services.AddTransient<ExceptionMiddleware>();
     builder.Services.AddDbContext<StoreContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
     builder.Host.UseSerilog((context, services, configuration) =>
@@ -37,6 +40,9 @@ try
             .Enrich.WithMachineName();
     });
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<ITokenService, TokenService>();
+    builder.Services.AddScoped<UnitOfWork>();
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
     builder.Services.AddIdentity<User, IdentityRole>(opt =>
     {
@@ -62,15 +68,16 @@ try
             ValidAudience = builder.Configuration["JWT:Audience"],
             ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
-            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]!)),
+            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SignInKey"]!)),
             RoleClaimType = ClaimTypes.Role
         };
     });
 
     var app = builder.Build();
+    app.UseMiddleware<ExceptionMiddleware>();
     app.UseAuthentication();
     app.UseAuthorization();
-    
+
 
     // Inicializar la base de datos
     Seeder.InitDb(app);
