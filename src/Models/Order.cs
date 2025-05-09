@@ -14,7 +14,7 @@ namespace taller1.src.Models
         public int Id { get; set; }
 
         // User ID (FK) who made the order
-        public int UserId { get; set; }
+        public string UserId { get; set; } = null!;
         public User User { get; set; } = null!;
 
         // Address ID (FK) for delivery

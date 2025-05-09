@@ -22,12 +22,6 @@ namespace ECommerce.src.Models
         // Birth date (required)
         public required DateTime BirthDate { get; set; }
 
-        // Password (required)
-        public required string Password { get; set; }
-
-        // Rol: 1: admin, 2: user (required)
-        public required int Role { get; set; }
-
         // Status: 0: inactive, 1: active (required)
         public bool Status { get; set; } = true;
 
@@ -39,14 +33,14 @@ namespace ECommerce.src.Models
 
         // Relationship :
         // Address: 1 user can have many addresses.
-        public List<Address> Addresses { get; set; } = new();
+        public Address? Address { get; set; }
 
         public string? DeactivationReason { get; set; }
 
         // Cart: 1 user can have 1 cart.
-        public Cart Cart { get; set; } = new();
+        public Cart? Cart { get; set; }
 
         // Order: 1 user can have many orders.
-        public List<Order> Orders { get; set; } = new();
+        public List<Order>? Orders { get; set; }
     }
 }
