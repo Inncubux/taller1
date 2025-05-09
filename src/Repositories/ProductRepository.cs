@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 
 using ECommerce.src.Data;
-using ECommerce.src.Dto;
+using ECommerce.src.Dto.Product;
 using ECommerce.src.Interfaces;
 using ECommerce.src.Models;
 

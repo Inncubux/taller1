@@ -14,7 +14,7 @@ namespace taller1.src.Models
         public int Id { get; set; }
 
         // User ID (FK)
-        public int UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
         // Property for navigation to the user
         public User User { get; set; } = null!;
