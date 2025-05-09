@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Globalization;
 
 using ECommerce.src.Data;
 using ECommerce.src.Interfaces;
@@ -26,6 +27,15 @@ try
 {
     Log.Information("starting server.");
     var builder = WebApplication.CreateBuilder(args);
+
+    // Configurar el formato de fecha global
+    var cultureInfo = new CultureInfo("es-ES");
+    cultureInfo.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+    cultureInfo.DateTimeFormat.DateSeparator = "-";
+
+    // Establecer la configuración global
+    CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+    CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
     builder.Services.AddControllers();
     builder.Services.AddTransient<ExceptionMiddleware>();
@@ -80,7 +90,7 @@ try
 
 
     // Inicializar la base de datos
-    Seeder.InitDb(app);
+    await Seeder.InitDb(app);
 
     // Registrar información importante sobre el servidor
     app.Lifetime.ApplicationStarted.Register(() =>

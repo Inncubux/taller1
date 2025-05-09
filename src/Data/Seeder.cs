@@ -1,7 +1,12 @@
+using System.Threading.Tasks;
+
 using Bogus;
 
+using ECommerce.src.Dto;
+using ECommerce.src.Mappers;
 using ECommerce.src.Models;
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using taller1.src.Models;
@@ -19,14 +24,18 @@ namespace ECommerce.src.Data
         /// This method should be called at the start of the application to ensure that the database is seeded with data.
         /// </summary>
         /// <param name="app"></param>
-        public static void InitDb(WebApplication app)
+        public static async Task InitDb(WebApplication app)
         {
             using var scope = app.Services.CreateScope();
+            using var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>()
+                ?? throw new InvalidOperationException("Could not get UserManager<User>");
 
             var context = scope.ServiceProvider.GetRequiredService<StoreContext>()
                 ?? throw new InvalidOperationException("Could not get StoreContext");
 
             SeedData(context);
+            await CreateUsers(userManager, GenerateUserDtos(10));
+
         }
         /// <summary>
         /// Method to seed the database with sample data.
@@ -39,40 +48,8 @@ namespace ECommerce.src.Data
             context.Database.Migrate();
             var faker = new Faker("es");
 
-            // Verify if the database is empty before seeding data.
-            // This prevents duplicate data from being added to the database.
-            if (!context.Users.Any()){
-
-            // Generate 10 fake users using the Bogus library.
-            var users = new Faker<User>()
-                .RuleFor(u => u.FirstName, f => f.Name.FullName())
-                .RuleFor(u => u.LastName, f => f.Name.LastName())
-                .RuleFor(u => u.Email, f => f.Internet.Email())
-                .RuleFor(u => u.Phone, f => f.Phone.PhoneNumber())
-                .RuleFor(u => u.BirthDate, f => f.Date.Past(30, DateTime.Now.AddYears(-18)))
-                .Generate(10);
-
-            context.Users.AddRange(users);
-            context.SaveChanges(); // Guarda los usuarios antes de continuar
-            if(!context.Addresses.Any()){
-
-                // Generate 10 fake addresses using the Bogus library.
-                var addresses = new Faker<Address>()
-                    .RuleFor(a => a.Street, f => f.Address.StreetName())
-                    .RuleFor(a => a.Number, f => f.Address.BuildingNumber())
-                    .RuleFor(a => a.Commune, f => f.Address.City())
-                    .RuleFor(a => a.Region, f => f.Address.State())
-                    .RuleFor(a => a.PostalCode, f => f.Address.ZipCode())
-                    .RuleFor(a => a.IsDefault, f => f.Random.Bool())
-                    .RuleFor(a => a.UserId, f => f.PickRandom(users).Id) // Asocia con un usuario existente
-                    .Generate(10); // Generates 10 addresses
-
-                context.Addresses.AddRange(addresses);
-                context.SaveChanges();
-                }
-            }
-
-            if(!context.Products.Any()){
+            if (!context.Products.Any())
+            {
 
                 // Generate 20 fake products using the Bogus library.
                 var products = new Faker<Product>()
@@ -88,7 +65,8 @@ namespace ECommerce.src.Data
                 context.Products.AddRange(products);
                 context.SaveChanges(); // Save products before generating cart products
 
-                if(!context.ProductImages.Any()){
+                if (!context.ProductImages.Any())
+                {
                     // Generate product images using the Bogus library.
                     var productImages = new Faker<ProductImage>()
                         .RuleFor(pi => pi.ImageUrl, f => f.Image.PicsumUrl()) // Generates a random image URL
@@ -108,6 +86,87 @@ namespace ECommerce.src.Data
 
                     context.ProductImages.AddRange(images);
                     context.SaveChanges(); // Save product images
+                }
+            }
+        }
+
+        private static List<RegisterDto> GenerateUserDtos(int count = 10)
+        {
+            var faker = new Faker("es");
+            var users = new Faker<RegisterDto>()
+                .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+                .RuleFor(u => u.LastName, f => f.Name.LastName())
+                .RuleFor(u => u.Email, f => f.Internet.Email())
+                .RuleFor(u => u.Password, f => f.Internet.Password(8, false)
+                         + f.Random.Char('A', 'Z')
+                         + f.Random.Char('a', 'z')
+                         + f.Random.Char('0', '9')
+                         + f.PickRandom('!', '@', '#', '$', '%', '^', '&', '*'))
+                .RuleFor(u => u.Phone, f => f.Phone.PhoneNumber())
+                .RuleFor(u => u.BirthDate, f => f.Date.Past(30, DateTime.Now.AddYears(-18)))
+                .RuleFor(u => u.Street, f => f.Address.StreetName())
+                .RuleFor(u => u.Number, f => f.Address.BuildingNumber())
+                .RuleFor(u => u.Commune, f => f.Address.City())
+                .RuleFor(u => u.Region, f => f.Address.State())
+                .RuleFor(u => u.PostalCode, f => f.Address.ZipCode())
+                .Generate(count);
+
+            return users;
+        }
+
+        public static async Task CreateUsers(UserManager<User> userManager, List<RegisterDto> users)
+        {
+            if(!userManager.Users.Any())
+            {
+                var admin = new User
+                {
+                    UserName = "ignacio.mancilla@gmail.com",
+                    Email = "ignacio.mancilla@gmail.com",
+                    FirstName = "Ignacio",
+                    LastName = "Mancilla",
+                    Phone = "999999999",
+                    Password = "Pa$$word2025",
+                    RegistrationDate = DateTime.UtcNow,
+                    Status = true,
+                    BirthDate = new DateTime(1990, 1, 1),
+                    Address = new Address
+                    {
+                        Street = "Central",
+                        Number = "1000",
+                        Commune = "Santiago",
+                        Region = "RM",
+                        PostalCode = "0000000"
+                    }
+                };
+
+                var existingAdmin = await userManager.FindByEmailAsync(admin.Email);
+                if (existingAdmin == null)
+                {
+                    var result = await userManager.CreateAsync(admin, admin.Password);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(admin, "Admin");
+                    
+                    }else{
+                        throw new Exception($"Error creating admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                    }
+                }
+
+                foreach (var userDto in users)
+                {
+                    var user = UserMapper.RegisterToUser(userDto);
+                    user.UserName = userDto.Email;
+                    user.Email = userDto.Email;
+                    var result = await userManager.CreateAsync(user, userDto.Password);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(user, "User");
+                    
+                    }else{
+                    
+                        throw new Exception($"Error creating user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                    }
+
                 }
             }
         }

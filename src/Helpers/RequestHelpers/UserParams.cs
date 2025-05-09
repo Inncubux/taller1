@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.src.Helpers.RequestHelpers
 {
-    public class UserParams
+    public class UserParams : PaginationParams
     {
         public bool? Status { get; set; }
         public DateTime? RegistrationDateFrom { get; set; }

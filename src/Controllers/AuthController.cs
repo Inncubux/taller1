@@ -20,7 +20,6 @@ namespace ECommerce.src.Controllers
         private readonly UserManager<User> _userManager = userManager;
         private readonly ITokenService _tokenService = tokenService;
 
-        [Route("register")]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto newUser)
         {
@@ -35,6 +34,31 @@ namespace ECommerce.src.Controllers
                 if (string.IsNullOrEmpty(newUser.Password) || string.IsNullOrWhiteSpace(newUser.ConfirmPassword))
                 {
                     return BadRequest(new ApiResponse<string>(false, "La contraseña no puede estar vacía."));
+                }
+
+                if (newUser.Password != newUser.ConfirmPassword)
+                {
+                    return BadRequest(new ApiResponse<string>(false, "Las contraseñas no coinciden."));
+                }
+
+                if (newUser.BirthDate> DateTime.UtcNow )
+                {
+                    return BadRequest(new ApiResponse<string>(false, "La fecha de nacimiento no puede ser mayor a la fecha actual."));
+                }
+                
+                // Verificar si el usuario tiene al menos 18 años
+                var today = DateTime.UtcNow;
+                var age = today.Year - newUser.BirthDate.Year;
+
+                // Ajustar la edad si el cumpleaños aún no ha ocurrido este año
+                if (newUser.BirthDate.Date > today.AddYears(-age).Date)
+                {
+                    age--;
+                }
+
+                if (age < 18)
+                {
+                    return BadRequest(new ApiResponse<string>(false, "Debes tener al menos 18 años para registrarte."));
                 }
 
                 var createUser = await _userManager.CreateAsync(user, newUser.Password);
@@ -64,7 +88,6 @@ namespace ECommerce.src.Controllers
                 return StatusCode(500, new ApiResponse<string>(false, "Error interno del servidor.", null, new List<string> { ex.Message }));
             }
         }
-        [Route("login")]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {

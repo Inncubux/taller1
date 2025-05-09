@@ -22,6 +22,10 @@ namespace ECommerce.src.Models
         // Birth date (required)
         public required DateTime BirthDate { get; set; }
 
+        // Password (required)
+        public required string Password { get; set; }
+
+
         // Status: 0: inactive, 1: active (required)
         public bool Status { get; set; } = true;
 

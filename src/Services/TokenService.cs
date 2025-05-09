@@ -21,7 +21,7 @@ namespace ECommerce.src.Services
         public TokenService(IConfiguration config)
         {
             _config = config;
-            var signingKey = _config["JWT:SigningKey"] ?? throw new ArgumentNullException("Key not found");
+            var signingKey = _config["JWT:SignInKey"] ?? throw new ArgumentNullException("Key not found");
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
         }
 

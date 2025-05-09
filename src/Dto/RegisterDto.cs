@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-using ECommerce.src.ValidationAttributes;
 
 namespace ECommerce.src.Dto
 {
@@ -23,7 +22,6 @@ namespace ECommerce.src.Dto
         public required string Phone { get; set; }
 
         [Required(ErrorMessage = "La fecha de nacimiento es obligatoria")]
-        [Birthdate]
         public required DateTime BirthDate { get; set; }
 
 
