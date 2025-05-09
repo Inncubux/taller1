@@ -38,9 +38,13 @@ try
     CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
     builder.Services.AddControllers();
+    // Configure middleware for exception handling
     builder.Services.AddTransient<ExceptionMiddleware>();
+    // Configure database context
     builder.Services.AddDbContext<StoreContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    
+    // Configure serilog for logging
     builder.Host.UseSerilog((context, services, configuration) =>
     {
         configuration
@@ -49,11 +53,15 @@ try
             .Enrich.WithThreadId()
             .Enrich.WithMachineName();
     });
+
+    // Configure scoped services
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<UnitOfWork>();
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+    // Configure Identity
     builder.Services.AddIdentity<User, IdentityRole>(opt =>
     {
         opt.User.RequireUniqueEmail = true;
@@ -63,6 +71,8 @@ try
     })
         .AddEntityFrameworkStores<StoreContext>();
 
+    // Configure Authentication
+    // Add JWT authentication
     builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -83,8 +93,22 @@ try
         };
     });
 
+    var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+    // Configure CORS
+    builder.Services.AddCors(opt =>
+    {
+        opt.AddPolicy("CorsPolicy", policy =>
+        {
+            policy.AllowAnyHeader()
+                .AllowAnyMethod()
+                .WithOrigins(allowedOrigins);
+        });
+    });
+
+    // Configure Distributed Memory Cache for active sessions
     builder.Services.AddDistributedMemoryCache();
 
+    // Configure session state
     builder.Services.AddSession(opt =>
     {
         opt.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -94,6 +118,7 @@ try
 
     var app = builder.Build();
     app.UseMiddleware<ExceptionMiddleware>();
+    app.UseCors("CorsPolicy");
     app.UseSession();
     app.UseAuthentication();
     app.UseAuthorization();
