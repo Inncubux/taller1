@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Bogus.DataSets;
 
-namespace ECommerce.src.Dto
+namespace ECommerce.src.Dto.User
 {
     public class UserDto
     {

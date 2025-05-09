@@ -11,7 +11,7 @@ using Azure.Identity;
 using Bogus.Extensions.UnitedKingdom;
 
 using ECommerce.src.Data;
-using ECommerce.src.Dto;
+using ECommerce.src.Dto.User;
 using ECommerce.src.Extensions;
 using ECommerce.src.Helpers;
 using ECommerce.src.Helpers.RequestHelpers;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using ECommerce.src.Controllers;
-using ECommerce.src.Dto;
+using ECommerce.src.Dto.Product;
 using ECommerce.src.Models;
 
 namespace ECommerce.src.Interfaces

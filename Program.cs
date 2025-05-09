@@ -43,7 +43,7 @@ try
     // Configure database context
     builder.Services.AddDbContext<StoreContext>(options =>
         options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-    
+
     // Configure serilog for logging
     builder.Host.UseSerilog((context, services, configuration) =>
     {

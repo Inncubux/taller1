@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using ECommerce.src.Dto;
+using ECommerce.src.Dto.User;
 using ECommerce.src.Helpers;
 using ECommerce.src.Interfaces;
 using ECommerce.src.Mappers;

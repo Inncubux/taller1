@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ECommerce.src.Dto
+namespace ECommerce.src.Dto.User
 {
     public class UpdateUserDto
     {

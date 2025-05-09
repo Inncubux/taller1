@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 using Bogus;
 
-using ECommerce.src.Dto;
+using ECommerce.src.Dto.User;
 using ECommerce.src.Mappers;
 using ECommerce.src.Models;
 
