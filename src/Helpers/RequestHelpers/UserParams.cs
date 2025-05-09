@@ -9,7 +9,7 @@ namespace ECommerce.src.Helpers.RequestHelpers
     {
         public bool? Status { get; set; }
         public DateTime? RegistrationDateFrom { get; set; }
-        public DateTime? RegistarionDateTo { get; set; }
+        public DateTime? RegistrationDateTo { get; set; }
         public string? SearchTerm { get; set; }
     }
 }

@@ -52,7 +52,7 @@ namespace ECommerce.src.Mappers
                 RegistrationDate = user.RegistrationDate,
                 LastLogin = user.LastLogin,
                 Status = user.Status,
-        };
+            };
 
         public static AuthUserDto UserToAuthUserDto(User user, string token) =>
             new()

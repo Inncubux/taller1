@@ -116,7 +116,7 @@ namespace ECommerce.src.Data
 
         public static async Task CreateUsers(UserManager<User> userManager, List<RegisterDto> users)
         {
-            if(!userManager.Users.Any())
+            if (!userManager.Users.Any())
             {
                 var admin = new User
                 {
@@ -146,8 +146,10 @@ namespace ECommerce.src.Data
                     if (result.Succeeded)
                     {
                         await userManager.AddToRoleAsync(admin, "Admin");
-                    
-                    }else{
+
+                    }
+                    else
+                    {
                         throw new Exception($"Error creating admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                     }
                 }
@@ -161,9 +163,11 @@ namespace ECommerce.src.Data
                     if (result.Succeeded)
                     {
                         await userManager.AddToRoleAsync(user, "User");
-                    
-                    }else{
-                    
+
+                    }
+                    else
+                    {
+
                         throw new Exception($"Error creating user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                     }
 

@@ -41,11 +41,11 @@ namespace ECommerce.src.Controllers
                     return BadRequest(new ApiResponse<string>(false, "Las contraseñas no coinciden."));
                 }
 
-                if (newUser.BirthDate> DateTime.UtcNow )
+                if (newUser.BirthDate > DateTime.UtcNow)
                 {
                     return BadRequest(new ApiResponse<string>(false, "La fecha de nacimiento no puede ser mayor a la fecha actual."));
                 }
-                
+
                 // Verificar si el usuario tiene al menos 18 años
                 var today = DateTime.UtcNow;
                 var age = today.Year - newUser.BirthDate.Year;

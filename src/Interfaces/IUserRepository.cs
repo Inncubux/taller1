@@ -10,10 +10,9 @@ namespace ECommerce.src.Interfaces
     public interface IUserRepository
     {
         IQueryable<User> GetUsersQueryable();
-        Task<User> GetUserByIdAsync(string id);
-        Task<User> GetUserByEmailAsync(string email);
-        Task<User?> UpdateUserAsync(User user);
-        Task<User?> GetByEmailAsync(string id);
+        Task<User?> GetUserByIdAsync(string id);
+        Task<User?> GetUserByEmailAsync(string email);
+        Task UpdateUserAsync(User user);
         Task<bool> CheckPasswordAsync(User user, string password);
     }
 }

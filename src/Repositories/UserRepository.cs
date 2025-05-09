@@ -22,19 +22,14 @@ namespace ECommerce.src.Repositories
             return result == PasswordVerificationResult.Success;
         }
 
-        public async Task<User?> GetByEmailAsync(string id)
+        public async Task<User?> GetUserByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            return await _userManager.Users.Include(u => u.Address).FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<User?> GetUserByIdAsync(string id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<User> GetUserByIdAsync(string id)
-        {
-            throw new NotImplementedException();
+            return await _userManager.Users.Include(u => u.Address).FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public IQueryable<User> GetUsersQueryable()
@@ -42,9 +37,9 @@ namespace ECommerce.src.Repositories
             return _userManager.Users.Include(u => u.Address).AsQueryable();
         }
 
-        public async Task<User?> UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            await _userManager.UpdateAsync(user);
         }
     }
 }
