@@ -11,6 +11,7 @@ namespace ECommerce.src.Controllers
     /// Base class for all API controllers. It inherits from ControllerBase to provide common functionality for API controllers.
     /// </summary>
     [ApiController]
+    [Route("api/[controller]")]
     public class BaseApiController : ControllerBase
     {
 
