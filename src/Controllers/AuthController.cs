@@ -115,6 +115,12 @@ namespace ECommerce.src.Controllers
                     return Unauthorized(new ApiResponse<string>(false, "Correo o contraseña incorrectos."));
                 }
 
+                var activeSessionUserId = HttpContext.Session.GetString("UserId");
+                if (activeSessionUserId != null)
+                {
+                    return BadRequest(new ApiResponse<string>(false, "Ya tienes una sesión activa."));
+                }
+
 
                 user.LastLogin = DateTime.UtcNow;
                 await _userManager.UpdateAsync(user);
@@ -125,12 +131,26 @@ namespace ECommerce.src.Controllers
                 var token = _tokenService.GenerateToken(user, roleName);
                 var userDto = UserMapper.UserToAuthUserDto(user, token);
 
-                return Ok(new ApiResponse<AuthUserDto>(true, "Inicio de sesión exitoso", userDto));
+                HttpContext.Session.SetString("UserId", user.Id);
+
+
+                return Ok(new ApiResponse<string>(true, "Inicio de sesión exitoso", token));
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new ApiResponse<string>(false, "Error interno del servidor", null, new List<string> { ex.Message }));
             }
+        }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            if (HttpContext.Session.GetString("UserId") == null)
+            {
+                return BadRequest(new ApiResponse<string>(false, "No hay ninguna sesión activa."));
+            }
+            HttpContext.Session.Clear();
+            return Ok(new ApiResponse<string>(true, "Sesión cerrada correctamente."));
         }
     }
 }

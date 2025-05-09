@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 using Azure.Identity;
@@ -20,6 +22,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
+
+using taller1.src.Models;
 
 namespace ECommerce.src.Controllers
 {
@@ -47,7 +51,7 @@ namespace ECommerce.src.Controllers
                                     (x.Email != null && x.Email.Contains(term.ToLower())));
             }
 
-            if(userParams.RegistrationDateTo<userParams.RegistrationDateFrom)
+            if (userParams.RegistrationDateTo < userParams.RegistrationDateFrom)
             {
                 return BadRequest(new ApiResponse<string>(false, "La fecha de registro inicial no puede ser mayor a la fecha de registro final."));
             }
@@ -114,13 +118,18 @@ namespace ECommerce.src.Controllers
                 return NotFound(new ApiResponse<string>(false, "Usuario no encontrado."));
             }
 
-            if(userStatusDto.Status == false){
+            if (userStatusDto.Status == false)
+            {
                 user.DeactivationReason = userStatusDto.Reason;
-                user.Status = false;}
-            else if(userStatusDto.Status == true){
+                user.Status = false;
+            }
+            else if (userStatusDto.Status == true)
+            {
                 user.DeactivationReason = null;
-                user.Status = true;}
-            else{
+                user.Status = true;
+            }
+            else
+            {
                 return BadRequest(new ApiResponse<string>(false, "El estado del usuario no es válido."));
             }
             await _unitOfWork.UserRepository.UpdateUserAsync(user);
@@ -128,7 +137,100 @@ namespace ECommerce.src.Controllers
 
             return Ok(new ApiResponse<string>(true, "Estado del usuario actualizado correctamente."));
         }
-    }
 
+        [Authorize]
+        [HttpPut("Update")]
+        public async Task<ActionResult<ApiResponse<string>>> UpdateUser([FromBody] UpdateUserDto updateUserDto)
+        {
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized(new ApiResponse<string>(false, "No se pudo indetificar el usuario."));
+            }
+
+            var user = await _unitOfWork.UserRepository.GetUserByEmailAsync(userEmail);
+            if (user == null)
+            {
+                return NotFound(new ApiResponse<string>(false, "Usuario no encontrado."));
+            }
+
+            if (user.Id != HttpContext.Session.GetString("UserId"))
+            {
+                return Unauthorized(new ApiResponse<string>(false, "No tienes permiso para actualizar este usuario."));
+            }
+
+            user.FirstName = updateUserDto.FirstName;
+            user.LastName = updateUserDto.LastName;
+            user.Email = updateUserDto.Email;
+            user.PhoneNumber = updateUserDto.Phone;
+            user.Address = new Address
+            {
+                Street = updateUserDto.Street ?? string.Empty,
+                Number = updateUserDto.Number ?? string.Empty,
+                Commune = updateUserDto.Commune ?? string.Empty,
+                Region = updateUserDto.Region ?? string.Empty,
+                PostalCode = updateUserDto.PostalCode ?? string.Empty
+            };
+
+            await _unitOfWork.UserRepository.UpdateUserAsync(user);
+            await _unitOfWork.SaveChangesAsync();
+
+            var userDto = UserMapper.UserToUserDto(user);
+
+            return Ok(new ApiResponse<UserDto>(true, "Usuario actualizado correctamente.", userDto));
+        }
+
+        [Authorize]
+        [HttpPut("ChangePassword")]
+
+        public async Task<ActionResult<ApiResponse<string>>> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+        {
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return Unauthorized(new ApiResponse<string>(false, "No se pudo indetificar el usuario."));
+            }
+
+            var user = await _unitOfWork.UserRepository.GetUserByEmailAsync(userEmail);
+            if (user == null)
+            {
+                return NotFound(new ApiResponse<string>(false, "Usuario no encontrado."));
+            }
+
+            if (user.Id != HttpContext.Session.GetString("UserId"))
+            {
+                return Unauthorized(new ApiResponse<string>(false, "No tienes permiso para actualizar este usuario."));
+            }
+            if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword)
+            {
+                return BadRequest(new ApiResponse<string>(false, "Las contraseñas no coinciden."));
+            }
+            if (changePasswordDto.Password == changePasswordDto.NewPassword)
+            {
+                return BadRequest(new ApiResponse<string>(false, "La nueva contraseña no puede ser igual a la contraseña actual."));
+            }
+
+            if (string.IsNullOrEmpty(changePasswordDto.Password) || string.IsNullOrWhiteSpace(changePasswordDto.Password))
+            {
+                return BadRequest(new ApiResponse<string>(false, "La contraseña no puede estar vacía."));
+            }
+
+            if (changePasswordDto.Password != user.Password)
+            {
+
+                return BadRequest(new ApiResponse<string>(false, "La contraseña actual no es correcta."));
+            }
+
+            var newPassword = await _unitOfWork.UserRepository.ChangePasswordAsync(user, changePasswordDto.NewPassword);
+            if (!newPassword.Succeeded)
+            {
+                return BadRequest(new ApiResponse<string>(false, "Error al cambiar la contraseña.", null, newPassword.Errors.Select(x => x.Description).ToList()));
+            }
+            user.Password = changePasswordDto.NewPassword;
+            await _unitOfWork.UserRepository.UpdateUserAsync(user);
+
+            return Ok(new ApiResponse<string>(true, "Contraseña cambiada correctamente."));
+        }
+    }
 
 }

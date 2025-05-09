@@ -83,8 +83,18 @@ try
         };
     });
 
+    builder.Services.AddDistributedMemoryCache();
+
+    builder.Services.AddSession(opt =>
+    {
+        opt.IdleTimeout = TimeSpan.FromMinutes(30);
+        opt.Cookie.HttpOnly = true;
+        opt.Cookie.IsEssential = true; // Make the session cookie essential
+    });
+
     var app = builder.Build();
     app.UseMiddleware<ExceptionMiddleware>();
+    app.UseSession();
     app.UseAuthentication();
     app.UseAuthorization();
 

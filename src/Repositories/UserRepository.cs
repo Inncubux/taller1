@@ -15,11 +15,11 @@ namespace ECommerce.src.Repositories
     {
         private readonly UserManager<User> _userManager = userManager;
 
-        public async Task<bool> CheckPasswordAsync(User user, string password)
+        public Task<IdentityResult> ChangePasswordAsync(User user, string newPassword)
         {
             var hasher = new PasswordHasher<User>();
-            var result = hasher.VerifyHashedPassword(user, user.PasswordHash!, password);
-            return result == PasswordVerificationResult.Success;
+            user.PasswordHash = hasher.HashPassword(user, newPassword);
+            return _userManager.UpdateAsync(user);
         }
 
         public async Task<User?> GetUserByEmailAsync(string email)
