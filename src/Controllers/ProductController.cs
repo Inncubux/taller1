@@ -12,7 +12,6 @@ namespace ECommerce.src.Controllers
     /// <summary>
     /// Provides endpoints for managing products.
     /// </summary>
-    [Route("Product")]
     public class ProductController(IProductRepository productRepository) : BaseApiController
     {
         /// <summary>
