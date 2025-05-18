@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace ECommerce.src.Dto.User
 {
+    /// <summary>
+    /// Data Transfer Object for changing the user's password.
+    /// Contains the current password, the new password, and the confirmation of the new password.
+    /// </summary>
     public class ChangePasswordDto
     {
+        /// <summary>
+        /// The current password of the user.
+        /// </summary>
         public required string Password { get; set; }
 
         [Required(ErrorMessage = "La contraseña es obligatoria.")]

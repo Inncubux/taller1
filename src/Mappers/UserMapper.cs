@@ -13,8 +13,16 @@ using taller1.src.Models;
 
 namespace ECommerce.src.Mappers
 {
+    /// <summary>
+    /// Provides mapping methods between User entities and their corresponding DTOs.
+    /// </summary>
     public class UserMapper
     {
+        /// <summary>
+        /// Maps a RegisterDto to a User entity.
+        /// </summary>
+        /// <param name="registerDto">The registration DTO containing user information.</param>
+        /// <returns>A User entity populated with the registration data.</returns>
         public static User RegisterToUser(RegisterDto registerDto) =>
         new()
         {
@@ -37,6 +45,12 @@ namespace ECommerce.src.Mappers
                 PostalCode = registerDto.PostalCode ?? string.Empty,
             }
         };
+
+        /// <summary>
+        /// Maps a User entity to a UserDto.
+        /// </summary>
+        /// <param name="user">The User entity to map.</param>
+        /// <returns>A UserDto containing user profile information.</returns>
         public static UserDto UserToUserDto(User user) =>
             new()
             {
@@ -54,6 +68,12 @@ namespace ECommerce.src.Mappers
                 Status = user.Status,
             };
 
+        /// <summary>
+        /// Maps a User entity to an AuthUserDto, including a JWT token.
+        /// </summary>
+        /// <param name="user">The User entity to map.</param>
+        /// <param name="token">The JWT token to include.</param>
+        /// <returns>An AuthUserDto containing user profile information and the JWT token.</returns>
         public static AuthUserDto UserToAuthUserDto(User user, string token) =>
             new()
             {
