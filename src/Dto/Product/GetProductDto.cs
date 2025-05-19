@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using taller1.src.Models.Relationship;
 
-namespace ECommerce.src.Dto
+namespace ECommerce.src.Dto.Product
 {
     /// <summary>
     /// Model for retrieving product information.
