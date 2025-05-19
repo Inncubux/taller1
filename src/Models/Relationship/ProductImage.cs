@@ -20,7 +20,8 @@ namespace taller1.src.Models.Relationship
         public Product Product { get; set; } = null!;
 
         // Image URL of the product
-        [Required]
         public required string ImageUrl { get; set; }
+
+        public string PublicId { get; set; } = string.Empty;
     }
 }

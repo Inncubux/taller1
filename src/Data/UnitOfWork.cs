@@ -1,22 +1,31 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
 using ECommerce.src.Interfaces;
 
 namespace ECommerce.src.Data
 {
-    public class UnitOfWork(StoreContext context, IUserRepository userRepository, IProductRepository productRepository)
+    public class UnitOfWork : IDisposable
     {
-        private readonly StoreContext _context = context;
+        private readonly StoreContext _context;
 
-        public IUserRepository UserRepository { get; } = userRepository;
-        public IProductRepository ProductRepository { get; } = productRepository;
+        public IUserRepository UserRepository { get; }
+        public IProductRepository ProductRepository { get; }
 
-        public async Task SaveChangesAsync()
+        public UnitOfWork(StoreContext context, IUserRepository userRepository, IProductRepository productRepository)
         {
-            await _context.SaveChangesAsync();
+            _context = context;
+            UserRepository = userRepository;
+            ProductRepository = productRepository;
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

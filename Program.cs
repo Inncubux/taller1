@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Security.Claims;
+using System.Text.Json;
 
 using ECommerce.src.Data;
 using ECommerce.src.Interfaces;
@@ -15,6 +16,10 @@ using Microsoft.IdentityModel.Tokens;
 
 using Serilog;
 
+using taller1.src.Helpers;
+using taller1.src.Interfaces;
+using taller1.src.Services;
+
 /// <summary>
 /// Main entry point for the application. It sets up the server, configures services, and starts the application.
 /// </summary>
@@ -28,6 +33,11 @@ try
     Log.Information("starting server.");
     var builder = WebApplication.CreateBuilder(args);
 
+    // Inyectar configuración de Cloudinary
+    builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+    builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
+
+
     // Configurar el formato de fecha global
     var cultureInfo = new CultureInfo("es-ES");
     cultureInfo.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
@@ -37,7 +47,13 @@ try
     CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
     CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.WriteIndented = true; // Para formato legible
+    });
+
     // Configure middleware for exception handling
     builder.Services.AddTransient<ExceptionMiddleware>();
     // Configure database context
@@ -91,6 +107,13 @@ try
             IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SignInKey"]!)),
             RoleClaimType = ClaimTypes.Role
         };
+    });
+
+    // Configurar políticas de autorización
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+        options.AddPolicy("ClienteOnly", policy => policy.RequireRole("Cliente"));
     });
 
     var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using taller1.src.Dto.Product;
 using taller1.src.Models.Relationship;
 
 namespace ECommerce.src.Dto.Product
@@ -43,6 +44,9 @@ namespace ECommerce.src.Dto.Product
         /// Condition of the product.
         /// </summary>
         public required string Condition { get; set; }
+
+        // Añade la lista de URLs aquí
+        public List<ProductImageDto> Images { get; set; } = new();
 
     }
 }

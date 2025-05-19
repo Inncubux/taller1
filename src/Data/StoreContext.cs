@@ -47,6 +47,8 @@ namespace ECommerce.src.Data
         /// <summary>
         /// Entity set for the product images in the database. It represents the ProductImages table in the database.
         /// </summary>
+        public DbSet<ProductImage> Images { get; set; }
+
         public DbSet<ProductImage> ProductImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

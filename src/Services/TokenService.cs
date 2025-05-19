@@ -25,12 +25,13 @@ namespace ECommerce.src.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
         }
 
-        public String GenerateToken(User user, string role)
+        public string GenerateToken(User user, string role)
         {
             var claims = new List<Claim>{
-                new(JwtRegisteredClaimNames.Email, user.Email!),
-                new(JwtRegisteredClaimNames.GivenName, user.FirstName),
-                new(ClaimTypes.Role, role),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),      // ID del usuario
+                new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
+                new Claim(ClaimTypes.Role, role),
             };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

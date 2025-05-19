@@ -20,5 +20,12 @@ namespace ECommerce.src.Interfaces
         /// <param name="sort">Sort the product</param>
         /// <returns>All products that match the sort option</returns>
         Task<IEnumerable<GetProductDto>> GetProductsAsync(string? sort);
+
+        /// <summary>
+        /// Deletes a product and its associated images.
+        /// </summary>
+        /// <param name="productId">ID of the product to delete</param>
+        /// <returns>True if deletion was successful, false otherwise</returns>
+        Task<bool> DeleteProductAsync(int productId);
     }
 }

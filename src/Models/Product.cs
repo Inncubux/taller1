@@ -49,5 +49,7 @@ namespace ECommerce.src.Models
 
         // (Optional) List of orders associated with the product.
         public List<OrderProduct> OrderProducts { get; set; } = new();
+
+        
     }
 }
