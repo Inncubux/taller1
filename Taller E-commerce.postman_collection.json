@@ -1,0 +1,1139 @@
+{
+	"info": {
+		"_postman_id": "e5a2c0d1-6843-45d3-bf4b-3e1282064449",
+		"name": "Taller E-commerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34959426",
+		"_collection_link": "https://www.postman.com/talller-1/workspace/taller1/collection/34959426-e5a2c0d1-6843-45d3-bf4b-3e1282064449?action=share&source=collection_link&creator=34959426"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Registro usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"firstName\": \"Juanito\",\r\n  \"lastName\": \"Pérez\",\r\n  \"email\": \"juanito.perez31@example.com\",\r\n  \"phone\": \"+56912345678\",\r\n  \"birthDate\": \"1990-05-15T00:00:00\",\r\n  \"role\" : \"admin\",\r\n  \"password\": \"Password123!\",\r\n  \"confirmPassword\": \"Password123!\",\r\n  \"street\": \"Calle Falsa\",\r\n  \"number\": \"123\",\r\n  \"commune\": \"Santiago\",\r\n  \"region\": \"Metropolitana\",\r\n  \"postalCode\": \"8320000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/auth/register",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Inicio de sesión admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Email\": \"ignacio.mancilla@gmail.com\",\r\n  \"Password\": \"Pa$$word2025\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/auth/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Inicio de sesión cliente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Email\": \"juan.perez5@example.com\",\r\n  \"Password\": \"Prueba123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/auth/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cerrar sesión",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7194/auth/logout",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Endpoints dedicados a la autenticación de usuario"
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Obtener todos los usuarios",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7194/user",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener usuario por ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7194/user/e661329d-5f7e-4073-b54b-7555c1dd8a59",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user",
+										"e661329d-5f7e-4073-b54b-7555c1dd8a59"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener por nombre y/o apellido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7194/user?Searchterm=juan",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "Searchterm",
+											"value": "juan"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener por e-mail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7194/user?Searchterm=juan.perez@example.com",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "Searchterm",
+											"value": "juan.perez@example.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener por fecha de registro",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7194/user?RegistrationDateFrom=05-18-2025",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "RegistrationDateFrom",
+											"value": "05-18-2025",
+											"description": "La fecha va con formato mm-dd-aaaa"
+										},
+										{
+											"key": "RegistrationDateTo",
+											"value": "05-19-2025",
+											"description": "La fecha va con formato mm-dd-aaaa",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener usuario y paginación",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7194/user?PageNumber=2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "PageNumber",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener usuario por status",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://localhost:7194/user?Status=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user"
+									],
+									"query": [
+										{
+											"key": "Status",
+											"value": "true",
+											"description": "Valores posibles true o false"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Endpoints para obtener usuarios.  \n  \n**Requiere ser administrador para utilizarlos**"
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "Actualizar estado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\" : false,\r\n    \"reason\" : \"prueba\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/user/f5d04183-eaf5-411c-a1ee-2f1f9ca78f7e/status",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user",
+										"f5d04183-eaf5-411c-a1ee-2f1f9ca78f7e",
+										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar datos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"firstName\": \"Juan\",\r\n  \"lastName\": \"Pérez\",\r\n  \"email\": \"juan.perez@example.com\",\r\n  \"phone\": \"+56912345678\",\r\n  \"birthDate\": \"1990-05-15T00:00:00\",\r\n  \"street\": \"Calle Falsa\",\r\n  \"number\": \"123\",\r\n  \"commune\": \"Santiago\",\r\n  \"region\": \"Metropolitana\",\r\n  \"postalCode\": \"8320000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/user/Update",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user",
+										"Update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cambiar contraseña",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\" : \"Password123!\",\r\n    \"newpassword\": \"Prueba123!\",\r\n    \"confirmpassword\" : \"Prueba123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/user/changePassword",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user",
+										"changePassword"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Endpoinst para actualización de usuarios"
+				},
+				{
+					"name": "Flow",
+					"item": [
+						{
+							"name": "Registro usuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Genera un email aleatorio\r",
+											"const random = Math.floor(Math.random() * 1000000);\r",
+											"const email = `user${random}@example.com`;\r",
+											"\r",
+											"// Guarda el email como variable de entorno o global\r",
+											"pm.environment.set(\"randomEmail\", email);\r",
+											"// o para variable global:\r",
+											"// pm.globals.set(\"randomEmail\", email);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"firstName\": \"Juanito\",\r\n  \"lastName\": \"Pérez\",\r\n  \"email\": \"{{randomEmail}}\",\r\n  \"phone\": \"+56912345678\",\r\n  \"birthDate\": \"1990-05-15T00:00:00\",\r\n  \"role\" : \"admin\",\r\n  \"password\": \"Password123!\",\r\n  \"confirmPassword\": \"Password123!\",\r\n  \"street\": \"Calle Falsa\",\r\n  \"number\": \"123\",\r\n  \"commune\": \"Santiago\",\r\n  \"region\": \"Metropolitana\",\r\n  \"postalCode\": \"8320000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/auth/register",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Inicio de sesión cliente",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Email\": \"{{email}}\",\r\n  \"Password\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/auth/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar datos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"street\": \"Calle Falsa\",\r\n  \"number\": \"123\",\r\n  \"commune\": \"Santiago\",\r\n  \"region\": \"Metropolitana\",\r\n  \"postalCode\": \"8320000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/user/Update",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user",
+										"Update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Visualizar datos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7194/user/Update",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"user",
+										"Update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cerrar sesión",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Codigo de estado 200 o 201\", function() {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+											"});\r",
+											"\r",
+											"const json = pm.response.json();\r",
+											"pm.test(\"Respuesta tiene success, message y data\", function(){\r",
+											"    pm.expect(json).to.have.property(\"success\", true);\r",
+											"    pm.expect(json).to.have.property(\"message\");\r",
+											"    pm.expect(json).to.have.property(\"data\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7194/auth/logout",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7194",
+									"path": [
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Endpoints para trabajar en flow"
+				}
+			],
+			"description": "Endpoints correspondiente a la sección usuario."
+		}
+	]
+}
