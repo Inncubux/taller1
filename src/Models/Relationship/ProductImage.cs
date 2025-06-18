@@ -22,5 +22,8 @@ namespace taller1.src.Models.Relationship
         // Image URL of the product
         [Required]
         public required string ImageUrl { get; set; }
+
+        // PublicId from Cloudinary (for deletion and management)
+        public string? PublicId { get; set; }
     }
 }

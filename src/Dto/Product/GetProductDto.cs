@@ -13,6 +13,9 @@ namespace ECommerce.src.Dto.Product
     /// </summary>
     public class GetProductDto
     {
+
+        public int Id { get; set; }
+        
         /// <summary>
         /// Name of the product.
         /// </summary>
@@ -43,6 +46,8 @@ namespace ECommerce.src.Dto.Product
         /// Condition of the product.
         /// </summary>
         public required string Condition { get; set; }
+
+        public List<string> ImageUrls { get; set; } = new();
 
     }
 }

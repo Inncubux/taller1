@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.src.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20250519005202_initMigration")]
-    partial class initMigration
+    [Migration("20250618014759_initMigrations")]
+    partial class initMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -451,6 +451,9 @@ namespace ECommerce.src.Data.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

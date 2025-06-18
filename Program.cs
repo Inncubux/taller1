@@ -15,6 +15,8 @@ using Microsoft.IdentityModel.Tokens;
 
 using Serilog;
 
+using taller1.src.Helpers;
+
 /// <summary>
 /// Main entry point for the application. It sets up the server, configures services, and starts the application.
 /// </summary>
@@ -53,6 +55,11 @@ try
             .Enrich.WithThreadId()
             .Enrich.WithMachineName();
     });
+
+    // Cloudinary configuration
+    builder.Services.Configure<CloudinarySettings>(
+        builder.Configuration.GetSection("CloudinarySettings"));
+    builder.Services.AddScoped<PhotoService>();
 
     // Configure scoped services
     builder.Services.AddScoped<IProductRepository, ProductRepository>();
